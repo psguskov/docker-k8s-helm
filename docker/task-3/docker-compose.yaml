@@ -1,5 +1,6 @@
 # Use this compose file to setup local development environment
 version: '3.6' # defines file features
+#utility
 services:
   rmq:
     image: "rabbitmq:3-management"
@@ -15,6 +16,24 @@ services:
     restart: always
     ports: 
       - "27017:27017"   
-
+# webService
+  webAdmin: 
+    image: dnatrack/web/admin
+    volumes:
+      - ${PWD}/appsettings.json:/etc/config/appsettings.json:ro
+    ports:
+      - "8666:80"
+  clientAdmin:
+    image: dnatrack/web/client
+    volumes:
+      - ${PWD}/appsettings.json:/etc/config/appsettings.json:ro
+    ports:
+      - "8667:80"
+# backend
+  analysis:
+    image: dnatrack/service/analysis
+    restart: always
+    volumes:
+      - ${PWD}/appsettings.json:/etc/config/appsettings.json:ro
 #networks
 #volumes
