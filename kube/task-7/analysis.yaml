@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srv-analysis
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: srv-analysis
+  template:
+    metadata:
+      labels:
+        app: srv-analysis
+        tier: web
+        tag: "v1"
+    spec:
+      containers:
+        - name: web-client
+          imagePullPolicy: Always
+          image: "arukim/dnatrack-service-analysis:v1"
+          volumeMounts:
+          - name: app-config
+            mountPath: /etc/config
+      volumes:
+        - name: app-config
+          configMap:
+            name: app

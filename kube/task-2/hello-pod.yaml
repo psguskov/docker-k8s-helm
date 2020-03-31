@@ -4,6 +4,7 @@ metadata:
   name: hello-world
   labels:
     app: test
+    version: beta
 spec:
   containers:
   - name: hello-world-container
